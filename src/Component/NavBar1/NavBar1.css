@@ -1,0 +1,69 @@
+.dashboard-home {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+ 
+  .top-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .avatar {
+    width: 35px;
+    height: 35px;
+    background: #7cc000;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    color: black;
+    padding: 10px 20px;
+  }
+  
+  .logo {
+    color: #7cc000;
+  }
+  
+
+  .nav-center {
+    display: flex;
+    gap: 25px;
+  }
+  
+  .nav-center span {
+    cursor: pointer;
+    color: #333;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+  
+  .nav-center span:hover {
+    color: #7cc000;
+  }
+  
+
+  .rightSide {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .dropdown p:hover{
+    color: #7cc000;
+  }
+  
+  @media (max-width: 768px) {
+    .top-section {
+      grid-template-columns: 1fr;
+    }
+  }

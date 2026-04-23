@@ -1,0 +1,23 @@
+.dashboard-home {
+    padding: 20px;
+    background: #50601F;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+  }
+  
+
+
+
+
+
+
+
+
+@media (max-width:768px) {
+    .top-section{
+        grid-template: 1fr;
+    }
+}

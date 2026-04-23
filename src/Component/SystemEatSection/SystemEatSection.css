@@ -1,0 +1,106 @@
+.containerSystemEat{
+    display: flex;
+    height: 100vh;
+    color: white;
+    background-color: #50601F;
+}
+.leftImage{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.leftImage img{
+    width: 250px;
+
+}
+.rightSection{
+    width: 60%;
+    padding: 60px;
+}
+.rightSection p{
+    color: black;
+    padding-left: 10px;
+}
+.diet_list{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+   ;
+}
+
+.diet-item{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+   /* background: #1b1b1b;*/
+   background-color: #f5f5f5;
+   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid transparent ;
+    transition: 0.2s;
+}
+.diet-item .active{
+    border: 1px solid #3b82f6;
+    background: #1f2a3a;
+}
+.radio{
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+}
+.redio-fill{
+    width: 10px;
+    height: 10px;
+    background: green;
+    border-radius: 50%;
+}
+.diet-text h3{
+    color: black;
+    font-size: 16px;
+    margin: 0;
+}
+.diet-text p{
+    color: black;
+    font-size: 13px;
+    margin-top: 4px;
+}
+.back{
+    background: greenyellow;
+    width: 80px;
+}
+
+
+
+
+@media (max-width : 768px) {
+     .rightSection{
+        width: 90%;
+        margin: 40px auto;
+     }
+     h1{
+        font-size: 22px;
+     }
+     .diet-item{
+        padding: 12px;
+        gap: 10px;
+     }
+     .diet-text h3{
+        font-size: 14px;
+     }
+     .diet-text p{
+        font-size: 12px;
+     }
+     .back{
+        width: 100%;
+        margin-top: 10px;
+     }
+}

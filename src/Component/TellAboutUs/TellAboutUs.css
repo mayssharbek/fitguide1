@@ -1,0 +1,115 @@
+.containerTellUs{
+    display: flex;
+    height: 100vh;
+    /*background-color: #111;*/
+    background-color: #50601F;
+    color: white;
+
+}
+.left{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.left img{
+    width: 250px;
+}
+.right{
+    width: 60%;
+    padding: 60px;
+}
+.right h1{
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+.right p{
+    color: black;
+    font-size: 15px;
+}
+.FormTellUs{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.FormTellUs input{
+ border-radius: 6px;
+
+}
+input .select{
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+  
+}
+.Sex .BodyFat{
+    display: flex;
+    gap: 10px;
+    padding: 8px 16px;
+    border: none;
+    background-color: orange;
+    color: #333;
+    cursor: pointer;
+
+}
+.continue{
+    margin-top: 20px;
+    padding: 12px;
+    background-color: greenyellow;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+body .dark{
+    background: #111;
+    color: white;
+}
+body .dark .card{
+    background: #1c1c1c;
+}
+
+body.dark input{
+    background: white;
+    color: black;
+}
+.foodImage{
+    background-color:white;
+}
+
+
+@media (max-width: 768px) {
+    .containerTellUs{
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+    }
+    .left{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .left img{
+        width: 150px;
+    }
+    .right{
+        width: 100%;
+        padding: 20px;
+    }
+    .right h1{
+        font-size: 22px;
+    }
+    .FormTellUs{
+        gap: 10px;
+    }
+    .input .select{
+        width: 100%;
+    }
+
+    .Sex .BodyFat{
+        width: 100%;
+    }
+    .continue{
+        width: 100%;
+    }
+
+}

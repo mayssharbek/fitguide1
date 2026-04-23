@@ -1,0 +1,33 @@
+button{
+    width: "200px";
+    height : "100px";
+    color: white;
+    background-color: greenyellow;
+    margin-left: 30px;
+    margin-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 20px;
+    border: none;
+
+
+    
+}
+.item li:hover{
+    color: #7cc000;
+}
+
+.logo{
+    width:70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit:cover;
+    background-color: black;
+    padding:8px;
+    margin-left: 10px;
+    
+}
+
+

@@ -1,0 +1,20 @@
+ /*.title{
+   
+  height: 32px;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 32px;
+  color: #1A1A1A;
+  padding-left: 40px;
+  margin-top: 100px;
+}*/
+/*text-4xl text-white bg-emerald-500 font-bold text-center -mb-<40px> font-serif'*/
+.sectionTitle{
+  color: white;
+  background-color:#50601F ;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 40px;
+  font-size: xx-large;
+  
+}

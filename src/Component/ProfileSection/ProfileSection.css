@@ -1,0 +1,275 @@
+
+.profile1 {
+ 
+  
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    display: flex;
+    
+  }
+ .profileTitle h1 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  
+  .profileTilte p {
+    color: gray;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .btn1Profile {
+    background: #7cc000;
+    padding-bottom: 10px;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .btn1Profile:hover {
+    background: #5e8e12;
+  }
+
+.profile-page {
+    padding: 25px;
+    background: #50601F;
+    min-height: 100vh;
+  }
+  
+  .profile-page h1 {
+    margin-bottom: 20px;
+  }
+  
+
+  .profile-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+  }
+  
+ 
+  .cardProfile {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  .left-card {
+    text-align: center;
+  }
+  
+  .avatar-big {
+    width: 90px;
+    height: 90px;
+    background: #7cc000;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-size: 32px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .left-card h2 {
+    margin-top: 10px;
+  }
+  
+  .left-card p {
+    color: gray;
+    font-size: 14px;
+  }
+  
+ 
+  .state {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+  }
+  
+  .state div {
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .state strong {
+    font-size: 18px;
+    color: #7cc000;
+  }
+  
+  .state span {
+    display: block;
+    font-size: 12px;
+    color: gray;
+  }
+  .heightState{
+    border: none;
+    background-color: #ddd;
+    border-radius: 40%;
+  }
+
+  .info-box {
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  
+  
+  .rightProfile-side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  
+  .gridProfile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .gridProfile input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #fafafa;
+  }
+  
+  .cardProfile h3 {
+    margin-bottom: 10px;
+  }
+ .FULL{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+ }
+
+
+  /*.profile{
+    display: flex;
+  }*/
+  .Sex1{
+    display: flex;
+    gap: 10px;
+  }
+  .Sex1 button{
+    padding: 8px 15px;
+   background-color: #f5f5f5;
+   color: black;
+   border-radius: 5px;
+   border: 2px solid black;
+
+  }
+  .Sex1 button:hover{
+    background-color: #7cc000;
+    color: white;
+  }
+
+
+  .goalDietRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+
+  .buttons {
+    display: flex;
+    gap: 8px;
+  }
+  
+
+  .dietBox select {
+    display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px
+  }
+.state1{
+  display: flex;
+  gap: 25px;
+}
+.state1 div{
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid gray;
+  border: none;
+}
+  
+  .state1 div:hover{
+    background-color: black;
+    color: white;
+  }
+  .cardProfile p{
+    color: gray;
+    
+  }
+  .state1 div strong{
+    color: #7cc000;
+  }
+  .tag{
+    padding: 8px 12px;
+    border-radius: 20px;
+    background: #eee;
+    color: black;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+    margin-bottom: 10px;
+  }
+  .tag:hover{
+    opacity: 0.7;
+  }
+  .tag.active{
+    border: 2px solid orange;
+    color: orange;
+    background: #fff7ed;
+  }
+  
+  .account-actions{
+    display: flex;
+    gap: 10px;
+  }
+ .btnDelete{
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold
+ }
+  
+  
+
+
+
+
+
+
+  @media (max-width: 768px) {
+    .profile-container {
+      grid-template-columns: 1fr;
+    }
+  
+    .gridProfile {
+      grid-template-columns: 1fr;
+    }
+  
+    .stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }

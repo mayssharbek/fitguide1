@@ -1,0 +1,45 @@
+.containerContact{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    background-color: #f5f5f5;
+    margin-top: 40px;
+}
+
+.contactImage img{
+    width: 80%;
+    object-fit: cover;
+    padding-left: 30px;
+    border-radius: 20px;
+    opacity: 0.8;
+}
+.workTogether h1{
+    font-size: 60px;
+    color: #5B5858;
+
+}
+.phone h2{
+    color: green;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.phone p{
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+.email h2{
+    color: green;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+.email p{
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 5px;
+}

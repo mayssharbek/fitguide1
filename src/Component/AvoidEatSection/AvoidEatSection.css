@@ -1,0 +1,103 @@
+.containerAvoidEat{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background:#50601F ;
+    color: white;
+    gap: 60px;
+}
+.leftAvoidEat img{
+    width: 180px;
+}
+.rightAvoidEat h1{
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+.rightAvoidEat p{
+    color: black;
+    margin-bottom: 25px;
+}
+.food-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.food-btn{
+    padding: 10px 16px;
+    border: 1px solid #444;
+    background: greenyellow;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.food-btn  :hover{
+    background: #2a2a2a;
+}
+.food-btn .active{
+    background: #ff7a45;
+    border: none;
+}
+.desc-food{
+    background: #f5f5f5;
+    padding: 12px;
+    border-radius: 6px;
+    color: black;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.continue1 , .back1{
+    background: greenyellow;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    
+}
+.back1{
+  background: greenyellow;
+
+}
+
+
+
+
+
+
+
+
+@media  (max-width: 768px) {
+
+    .acontainerAvoidEat{
+      flex-direction:column;
+      text-align:center;
+      height:auto;
+      padding:40px 20px;
+    }
+  
+    .leftAvoidEat img{
+      width:130px;
+      margin-bottom:20px;
+    }
+  
+    .rightAvoidEat{
+      max-width:100%;
+    }
+  
+    .food-list{
+      justify-content:center;
+    }
+  
+    .food-btn{
+      font-size:14px;
+      padding: 10px 14px;
+    }
+    
+  
+  
+  }
+  

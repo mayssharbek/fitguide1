@@ -1,0 +1,17 @@
+.container1{
+    display: flex;
+    justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      background-color: #50601F;
+  }
+  .btnRead1{
+    width: "200px";
+    height : "100px";
+    color: white;
+    background-color:#50601F;
+    border-radius: 20px;
+    border: none;
+    margin-top: 10px;
+    text-align: center;
+  }

@@ -1,0 +1,93 @@
+.feature-container{
+    min-height: 100vh;
+    background-color:#50601F;
+    color: black;
+    padding: 30px;
+    
+
+}
+.feature-container h1{
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.feature-grid{
+    display: grid;
+    grid-template-columns: repeat(2 , 300px);
+    justify-content: center;
+    gap: 30px;
+}
+.cardFeature{
+    background-color: #f5f5f5;
+    width: 280px;
+    padding: 30px 20px;
+    margin-top: 40PX;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease;
+}
+.cardFeature h2{
+    color: olive;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.cardFeature p{
+    color: #ccc;
+    font-size: 14px;
+    font-weight: bold;
+}
+.cardFeature h3{
+    margin-top: 20px;
+    font-size: 16px;
+}
+.cardFeature ul{
+ padding-left: 20px;
+}
+.cardFeature li{
+    font-size: 14px;
+    margin: 5px 0;
+}
+.cardFeature:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.cardFeature button{
+    margin-top: 15px;
+    width: 50%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+
+
+
+
+
+
+@media (max-width:768px) {
+   
+   .feature-grid{
+    grid-template-columns: 1fr;
+}
+    .cardFeature{
+        padding: 20px;
+    }
+    .cardFeature h2{
+        font-size: 18px;
+    }
+    .cardFeature p .cardFeature li{
+         font-size: 13px;
+    }
+    .doctorGuide{
+        margin-top: 10px;
+    }
+}

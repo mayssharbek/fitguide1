@@ -1,0 +1,9 @@
+.loginLink1{
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.loginLink1 span{
+    color: #4ea8ff;
+    cursor: pointer;
+}

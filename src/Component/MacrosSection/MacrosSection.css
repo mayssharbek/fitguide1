@@ -1,0 +1,94 @@
+.macros-container {
+    background: #50601F;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 30px;
+  
+  }
+  .macros-container h3{
+    color: orange;
+    font-size: 20px;
+  }
+  
+
+  .macros-container h3 {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+
+  .macro-item {
+    margin-bottom: 20px;
+  }
+  
+
+  .macro-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .macro-header p {
+    margin: 0;
+    font-size: 13px;
+    color: white;
+    
+  }
+  
+  .icon {
+    margin-right: 6px;
+  }
+  
+
+  .percent {
+    font-weight: bold;
+  }
+  
+
+  .progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #ddd;
+    border-radius: 10px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  
+ 
+  .progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+  }
+  
+  .warning {
+    background: white;
+    color: #856404;
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    animation: grow 1s ease;
+  }
+  
+  @keyframes grow {
+    from { width: 0; }
+  }
+
+
+
+
+
+
+
+
+  @media (max-width:900px) {
+    .macros-container{
+        max-width: 90%;
+    }
+  }

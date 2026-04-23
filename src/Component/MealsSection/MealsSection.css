@@ -1,0 +1,160 @@
+.meals-container {
+    padding: 25px;
+    /*background: #333;
+   /* background: #f5f5f5;*/
+   background-color:  #50601F;
+    min-height: 100vh;
+  }
+  
+
+  .meals-container h1 {
+    margin-bottom: 25px;
+    font-weight: bold;
+    color: orange;
+  }
+  
+
+  .meals-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+  }
+  
+
+  .meal-card {
+    /*background: #1c1c1c;
+    /*background: #fff;*/
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .meal-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+  
+  
+  .meal-card h4 {
+    font-size: 13px;
+    color: black;
+    letter-spacing: 1px;
+  }
+  
+
+  .meal-card h2 {
+    margin: 8px 0;
+    font-size: 20px;
+  }
+  
+
+  .meal-card p {
+    color: #777;
+    font-size: 14px;
+  }
+  
+  .meal-card::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    background: linear-gradient(90deg , #8bc34a , #4caf50);
+  }
+  .meal-card h2{
+    contain: ("No food");
+    color: #bbb;
+  }
+
+  .actions {
+    
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+  }
+  
+
+ .swap {
+    display: block;
+    flex: 1;
+    padding: 10px;
+    border: none;
+   /* background: linear-gradient(135deg, #8bc34a, #4caf50);*/
+    color: white;
+    background-color: greenyellow;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .swap:hover {
+    background: #ddd;
+  }
+  
+  
+  .action .add {
+    flex: 1;
+    padding: 10px;
+    border: none;
+   /* background: linear-gradient(135deg, #8bc34a, #4caf50);*/
+    color: white;
+    background-color: greenyellow;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .add:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+
+  .caloreis{
+    margin-top: 20px;
+    background: greenyellow;
+    width: 40%;
+  }
+ 
+
+
+
+
+
+
+
+
+  @media (max-width: 600px) {
+    .meals-grid {
+      grid-template-columns: 1fr; 
+    }
+  
+    .meal-card {
+      padding: 15px;
+    }
+  
+    .meal-card h2 {
+      font-size: 18px;
+    }
+  
+    .actions {
+      flex-direction: column;
+    }
+  }
+
+
+
+
+
+
+
+
+   
+
+ 
