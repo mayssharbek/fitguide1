@@ -6,7 +6,7 @@ const SystemEat = () => {
    
   return (
    
-        <SystemEatSection Image="/assets/image/Food.jpg" titleSystemEat="What do you eat?" descriptionSystemEat="Choose a diet type." />
+        <SystemEatSection Image="/fitguide/assets/image/Food.jpg" titleSystemEat="What do you eat?" descriptionSystemEat="Choose a diet type." />
      
   )
 }

@@ -5,7 +5,7 @@ import './AvoidEat.css'
 const AvoidEat = () => {
   return (
     <>
-      <AvoidEatSection imageAvoidEat="/assets/image/avoidEat.jpg" titleAvoidEat="Are there foods you avoid"
+      <AvoidEatSection imageAvoidEat="/fitguide/assets/image/avoidEat.jpg" titleAvoidEat="Are there foods you avoid"
        descriptionAvoidEat="This may be due to allergies or any other reason."/>
     </>
   )

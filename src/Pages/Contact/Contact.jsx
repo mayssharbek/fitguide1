@@ -8,11 +8,11 @@ const Contact = () => {
   return (
     <>
        <Header>
-         <Hero image="/assets/image/contactImage1.jpg" title="Contact" 
+         <Hero image="/fitguide/assets/image/contactImage1.jpg" title="Contact" 
          description1="Get in Touch with Us ,We Love to Hear From You , Contact Us AnyTime ,Have Question ? Contact Me"
          btn = "Contact me"/>
        </Header>
-       <TogetherContact contctImage= "/assets/image/Contact.jpg"  title5="Let work together. Get in touch!"
+       <TogetherContact contctImage= "/fitguide/assets/image/Contact.jpg"  title5="Let work together. Get in touch!"
          title6="phone" description3="+980739148"
          title7="Email"  description4="mays.sharbek@gmail.com"
 

@@ -140,7 +140,11 @@ const routes = createBrowserRouter([
     ]
   }
   
-])
+],
+{
+  basename : "/fitguide"
+}
+)
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
