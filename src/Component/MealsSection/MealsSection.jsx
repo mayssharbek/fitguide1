@@ -12,11 +12,11 @@ const MealsSection = ({ titleMeal }) => {
   const navigate = useNavigate();
 
   const SUGGESTED_MEALS = [
-    { id: 'm1', name: 'Oatmeal', protein: 10, carbs: 60, fats: 5, kcal: 350 },
-    { id: 'm2', name: 'Salad', protein: 5, carbs: 15, fats: 10, kcal: 280 },
+    { id: 'm1', name: 'Oatmeal', protein: 10, carbs: 60, fats: 5, kcal: 350 , time:"11:00 Am" },
+    { id: 'm2', name: 'Salad', protein: 5, carbs: 15, fats: 10, kcal: 280, time:"10:00 Am" },
   ];
 
-  // دالة تحميل البيانات من LocalStorage
+
   const load = () => {
     const today = new Date().toISOString().split("T")[0];
     const data = JSON.parse(localStorage.getItem("meals") || "{}");
@@ -43,13 +43,14 @@ const MealsSection = ({ titleMeal }) => {
     const newEntry = {
       ...randomMeal,
       type: mealType,
-      instanceId: Date.now() // هنا يتم إنشاء الـ ID الفريد
+      instanceId: Date.now(),
+      time : new Date().toLocaleTimeString([] , {hour:"2-digit" , minute:"2-digit"})
     };
 
     stored[today][mealType].push(newEntry);
 
     localStorage.setItem("meals", JSON.stringify(stored));
-    window.dispatchEvent(new Event("mealsUpdated")); // تحديث الواجهة فوراً
+    window.dispatchEvent(new Event("mealsUpdated")); 
   };
 
   const handleSwap = (meal) => {

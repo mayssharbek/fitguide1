@@ -96,53 +96,90 @@ const FoodLibrarySection = ({ titleLibraryFood }) => {
   };*/
 
 
-  const { swapTargetId, mealType } = location.state || {};
+  
+const {
+  swapTargetId,
+  mealType,
+  from,
+  day,
+  type
+} = location.state || {};
+console.log(from , day , type)
+console.log(location.state)
 
 const handleSelected = (selectFood) => {
-  const today = new Date().toISOString().split("T")[0];
-  const stored = JSON.parse(localStorage.getItem("meals") || "{}");
 
-  // تأكدي أن التاريخ موجود في التخزين
-  if (!stored[today]) {
-    stored[today] = { Breakfast: [], Lunch: [], Dinner: [], Snack: [] };
-  }
+  // 🔥 حالة Meal Plan (Swap من الخطة)
+  if (from === "mealPlan") {
 
-  if (swapTargetId) {
-    // --- حالة الاستبدال (Swap) ---
-    // نبحث عن الوجبة القديمة داخل النوع المحدد (مثلاً Lunch)
-    const index = stored[today][mealType].findIndex(m => m.instanceId === swapTargetId);
+    const storedPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
 
-    if (index !== -1) {
-      // نستبدل الوجبة القديمة بالجديدة مع الحفاظ على الـ instanceId والـ type
-      stored[today][mealType][index] = { 
-        ...selectFood, 
-        instanceId: swapTargetId,
-        type: mealType 
-      };
+    if (!storedPlan[day]) {
+      storedPlan[day] = {};
     }
-  } else {
-    // --- حالة الإضافة الجديدة (Add) ---
-    const newEntry = {
-      ...selectFood,
-      instanceId: Date.now(), // ننشئ ID جديد
-      type: mealType || "Breakfast" // نستخدم النوع القادم من الصفحة السابقة
+    const fixedType =
+    type.charAt(0).toUpperCase() +
+    type.slice(1).toLowerCase();
+
+      storedPlan[day][fixedType] = selectFood
+    
+    
+        localStorage.setItem("mealPlan", JSON.stringify(storedPlan));
+        window.dispatchEvent(new Event("mealPlanUpdated"))
+    
+        navigate("/app/mealplan");
+        return; // ❗️ مهم جداً
+      }
+    
+    
+      // 🔥 حالة Meals اليومية
+      const today = new Date().toISOString().split("T")[0];
+      const stored = JSON.parse(localStorage.getItem("meals") || "{}");
+    
+      if (!stored[today]) {
+        stored[today] = {
+          Breakfast: [],
+          Lunch: [],
+          Dinner: [],
+          Snack: []
+        };
+      }
+    
+      if (swapTargetId) {
+        // 🔄 Swap
+        const index = stored[today][mealType].findIndex(
+          m => m.instanceId === swapTargetId
+        );
+    
+        if (index !== -1) {
+          stored[today][mealType][index] = {
+            ...selectFood,
+            instanceId: swapTargetId,
+            type: mealType
+          };
+        }
+    
+      } else {
+        // ➕ Add جديد
+        const newEntry = {
+          ...selectFood,
+          instanceId: Date.now(),
+          type: mealType || "Breakfast"
+        };
+    
+        stored[today][newEntry.type].push(newEntry);
+      }
+    
+      localStorage.setItem("meals", JSON.stringify(stored));
+      window.dispatchEvent(new Event("mealsUpdated"));
+    
+      navigate("/app/meals");
     };
-    stored[today][newEntry.type].push(newEntry);
-  }
+    
+    
 
-  // حفظ في LocalStorage وتنبيه بقية المكونات
-  localStorage.setItem("meals", JSON.stringify(stored));
-  window.dispatchEvent(new Event("mealsUpdated"));
+
   
-  // العودة لصفحة الوجبات
-  navigate("/app/meals");
-};
-
-
-
-
-
-
 
 
 
@@ -162,7 +199,7 @@ const handleSelected = (selectFood) => {
       />
       <div className='food-grid'>
         {filterFood().map((food, index) => (
-          <div key={index} className='food-card' onClick={()=>handleSelected(food)}>
+          <div key={index} className='food-card' >
             <h3>{food.name}:</h3>
             <p>Calories: {food.calories}</p>
             <p>Protein: {food.protein}</p>
@@ -177,7 +214,7 @@ const handleSelected = (selectFood) => {
         ))}
       </div>
       
-      <button className='continue11' onClick={() => navigate("/app")}>Back</button>
+      <button className='continue11' onClick={() => navigate("/features/healthdata")}>Back</button>
       <button className='continue12' onClick={goToNextPage}>continue</button>
     </div>
   );

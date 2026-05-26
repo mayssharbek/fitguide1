@@ -9,7 +9,7 @@ export const ExperianceData = [
             glucose : "162 H",
             hemoglobin : "9.60 L"    
         },
-        image : "/fitguide/assets/image/blood1.jpg"
+        image : "/FitGuideProject/assets/image/blood1.jpg"
     },
     {
         id : 2,
@@ -21,7 +21,7 @@ export const ExperianceData = [
             hemoglobin : "9.40 L"   ,
             iron : "19 L" 
         },
-        image : "/fitguide/assets/image/Blood2.jpg"
+        image : "/FitGuideProject/assets/image/Blood2.jpg"
     },
     {
         id : 3,
@@ -32,7 +32,7 @@ export const ExperianceData = [
         bloodTest : {
             glucose : "251 H",   
         },
-        image : "/fitguide/assets/image/Blood3.jpg"
+        image : "/FitGuideProject/assets/image/Blood3.jpg"
     },
     {
         id : 4,
@@ -43,7 +43,7 @@ export const ExperianceData = [
         bloodTest : {
             glucose : "146 H",  
         },
-        image : "/fitguide/assets/image/Blood4.jpg"
+        image : "/FitGuideProject/assets/image/Blood4.jpg"
     },
     {
         id : 5,
@@ -56,7 +56,7 @@ export const ExperianceData = [
             iron : "158",
             Ferritin : "387 H"    
         },
-        image : "/fitguide/assets/image/Blood5.jpg"
+        image : "/FitGuideProject/assets/image/Blood5.jpg"
 
     },
     {
@@ -70,7 +70,7 @@ export const ExperianceData = [
             iron : "38.27 L"
 
         },
-        image : "/fitguide/assets/image/Blood6.jpg"
+        image : "/FitGuideProject/assets/image/Blood6.jpg"
     },
     {
         id : 7,
@@ -83,6 +83,6 @@ export const ExperianceData = [
             iron : "26 L"
 
         },
-        image : "/fitguide/assets/image/Blood7.jpg"
+        image : "/FitGuideProject/assets/image/Blood7.jpg"
     }
 ]

@@ -1,12 +1,17 @@
 .weekly-container{
-    margin-top: 30px;
+    /*margin-top: 30px;
     background: #50601F;
-   /* background: #fff;*/
+   /* background: #fff;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 20px;*/
+    background: white;
+    padding: 22px;
+    border-radius: 24px;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 .weekly-container h3{
-    color: orange;
+    color: #d98718;
     font-size: 20px;
     font-weight: bold;
 }
@@ -45,3 +50,35 @@
     background: #eee;
     color: #999;
 }
+
+.statsRow{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+  }
+  
+  .statCard{
+    background:#f7f7f7;
+    padding:18px;
+    border-radius:18px;
+    text-align:center;
+    margin-top: 20px;
+  }
+  
+  .statCard h3{
+    font-size:28px;
+    margin-bottom:8px;
+  }
+  
+  .statCard p{
+    color:#666;
+    font-size:14px;
+  }
+
+
+
+  @media (max-width:768px) {
+    .statsRow{
+        grid-template-columns: 1fr;
+    }
+  }

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import './MacrosSection.css'
+import { useNavigate } from 'react-router';
 
 const MacrosSection = ({MacrosTitle}) => {
+  const navigate = useNavigate()
     const [macros , setMacros] = useState({
         protein : 0 ,
         carbs : 0,
@@ -19,15 +21,15 @@ const MacrosSection = ({MacrosTitle}) => {
         const today = new Date().toISOString().split("T")[0];
         const stored = JSON.parse(localStorage.getItem("meals") || "{}");
         const meals = stored[today] || { Breakfast: [], Lunch: [], Dinner: [], Snack: [] };
-    
+  
         let p = 0, c = 0, f = 0;
 
 
         Object.values(meals).forEach((mealArray)=>{
             mealArray.forEach((food)=>{
-                p += Number(food.p || 0 );  
-                c += Number(food.c|| 0);
-                f += Number(food.f || 0);
+                p += Number(food.protine || 0 );  
+                c += Number(food.carbs|| 0);
+                f += Number(food.fats || 0);
             });
         });
         setMacros({protein:p , carbs:c , fats:f})
@@ -36,7 +38,7 @@ const MacrosSection = ({MacrosTitle}) => {
         useEffect(()=>{
 
             calculateMacros();
-            "mealsUpdated" 
+         /*   "mealsUpdated" */
             window.addEventListener("mealsUpdated", calculateMacros);
   
   
@@ -102,6 +104,7 @@ const MacrosSection = ({MacrosTitle}) => {
          <div className='warning'>
             You nearing you Carbs !limit
          </div>
+         <button onClick={()=>{navigate("/app/meallogs")}} className='logs'>Meal Logs</button>
     </div>
   )
 }

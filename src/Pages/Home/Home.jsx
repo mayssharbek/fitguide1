@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <>
       <Header>
-      <Hero image="/fitguide/assets/image/fitguide.jpg" title="STAY FIT & HEALTHY" 
+      <Hero image="/FitGuideProject/assets/image/fitguide.jpg" title="STAY FIT & HEALTHY" 
       title1 = "Nutirition plane , precision tailored for you"
       description1="share your 
        our details and let our system craft a personalized meal plan 

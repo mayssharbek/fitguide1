@@ -3,13 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
-  "homepage": "https://mayssharbek.github.io/fitguide",
-  "bugs": {
-    "url": "https://github.com/Rashashoaib123/fitguide/issues"
-  },
+  "homepage": "https://mayssharbek.github.io/FitGuideProject",
+  
+
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Rashashoaib123/fitguide.git"
+    "url": "git+https://github.com/mayssharbek/FitGuideProject.git"
   },
   "license": "ISC",
   "author": "",

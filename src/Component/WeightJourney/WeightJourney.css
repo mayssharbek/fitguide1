@@ -1,0 +1,67 @@
+.weightCard{
+  background: white;
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+
+.weightNumber{
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.weightNumber h1{
+  font-size: 72px;
+  margin: 0;
+}
+
+.weightNumber span{
+  font-size: 32px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.weightBadge{
+  display: inline-block;
+  background: #eef9ea;
+  color: #72a82d;
+  padding: 10px 14px;
+  border-radius: 16px;
+  margin: 12px 0 20px;
+  font-weight: bold;
+}
+
+.weightsList{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.weightItem{
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weightItem span{
+  color: #72a82d;
+  font-weight: bold;
+}
+
+.logBtnWeight{
+  width: 50%;
+  border: none;
+  margin-top: 18px;
+  background: #85c318;
+  color: white;
+  padding: 15px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}

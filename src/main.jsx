@@ -27,6 +27,9 @@ import DoctorsDetalies from './Pages/DoctorsDetalies/DoctorsDetalies'
 import DashboardLayout from './Pages/DashboardLayout/DashboardLayout'
 import DashboardHome from './Pages/DashboardHome/DashboardHome'
 import Profile from './Pages/Profile/Profile'
+import MealLogs from './Pages/MealLogs/MealLogs'
+import MealPlan from './Pages/MealPlan/MealPlan'
+import Progress from './Pages/Progress/Progress'
 
 
 const routes = createBrowserRouter([
@@ -136,13 +139,27 @@ const routes = createBrowserRouter([
       {
         path : "profile",
         element : <Profile/>
+      },
+      {
+        path: "meallogs",
+        element : <MealLogs/>
+      },
+      {
+        path:"mealplan",
+        element:<MealPlan/>
+      },
+      {
+        path:"progress",
+        element:<Progress/>
       }
     ]
+    
   }
+  
   
 ],
 {
-  basename : "/fitguide"
+  basename : "/FitGuideProject"
 }
 )
 

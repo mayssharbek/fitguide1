@@ -23,7 +23,6 @@ const DoctorsDetaliesSection = () => {
       <p className='doctorDec'><span>Description:</span>{doctor.description}</p>
       <p><span>Patients:</span>{doctor.patients}</p>
       <p><span>WorkingHours:</span>{doctor.workingHours}</p>
-      <p><span>Price:</span>{doctor.price}</p>
       <p><span>Education:</span>{doctor.education}</p>
       <p><span>Languages:</span>{doctor.languages}</p>
      

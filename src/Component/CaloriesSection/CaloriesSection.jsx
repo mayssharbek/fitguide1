@@ -8,11 +8,18 @@ const CaloriesSection = ({caloriesTitle}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-          const today = new Date().toISOString().split("T")[0];
+      const loadData = ()=>{
+        const today = new Date().toISOString().split("T")[0];
           const stored = JSON.parse(localStorage.getItem("meals") || "{}")
           const meals = stored[today] || {};
-          const sun = Object.values(meals).flat().reduce((acc , food)=>acc+(food?.calories || 0),0);
-          setTotal(sun);
+          const sum = Object.values(meals).flat().reduce((acc , food)=>acc+(food?.kcal || food?.calories || 0),0);
+          setTotal(sum);
+      }
+         loadData();
+         window.addEventListener("mealsUpdate" , loadData);
+         return ()=>{
+          window.removeEventListener("mealsUpdated" , loadData)
+         }
         
       
       }, []);
@@ -61,9 +68,7 @@ const CaloriesSection = ({caloriesTitle}) => {
 
     <button className="btn green" onClick={goToFoodPage}>+ Add Meal Manually</button>
 
-    <button className="btn dark">⚖ Log Weight</button>
-
-    <button className='btn outline' onClick={handleSubmit}> 📅 Go to Weekly Planner</button>
+    <button className='btn outline' onClick={()=>navigate("/app/mealplan")}> 📅 Go to Weekly Planner</button>
 
       
    

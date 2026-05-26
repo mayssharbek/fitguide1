@@ -1,0 +1,16 @@
+.ProgressContainer{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 20px;
+    background-color:  #50601F;
+    gap: 20px;
+}
+
+
+
+@media (max-width:768px) {
+    .ProgressContainer{
+        flex-direction: column;
+    }
+}

@@ -14,6 +14,12 @@ const NavBar1 = () => {
         <span onClick={() => navigate("/app")}>
           Dashboard
         </span>
+        <span onClick={() => navigate("/app/mealplan")}>
+           Meal Plan
+        </span>
+        <span onClick={() => navigate("/app/progress")}>
+           Progress
+        </span>
       </div>
 
         <div className='rightSide'>

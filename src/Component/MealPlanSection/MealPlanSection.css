@@ -1,0 +1,160 @@
+.MealPlanContainer {
+    min-height: 100vh;
+    padding: 20px;
+    background-color:  #50601F;
+  }
+  .MealPlanContainer h2 {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .headerMealPlan {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .primary-btnMeal {
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  
+  .week-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f3f4f6;
+    border-radius: 10px;
+  }
+
+  .days {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .days button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  
+  }
+  .days small{
+    font-size: 12px;
+    opacity: 0.7;
+  }
+  
+  .days .active {
+    background: orange;
+    color: white;
+  }
+  
+
+  .gridMealPlan {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+
+  .cardMealPlan {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  
+  .badgeMealPlan {
+    font-size: 12px;
+    background: #fef3c7;
+    padding: 5px 8px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  
+  .mealPlan-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+
+    .actionsMealPlan {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .actionsMealPlan button {
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  
+  }
+  
+
+  .deleteMealPlan {
+    margin-top: 20px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+ 
+  }
+
+
+
+
+
+
+  @media (max-width:768px) {
+    .MealPlanContainer{
+      padding: 15px;
+     
+    }
+    .MealPlanContainer h1{
+      font-size: 26px;
+    }
+    .gridMealPlan{
+      grid-template-columns: 1fr;
+    }
+    .cardMealPlan{
+      padding: 18px;
+    }
+  }
+
+    .days {
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+    .days button{
+      min-width: 75px;
+      padding: 10px;
+      font-size: 13px;
+    }
+    .mealPlan-info h4{
+      font-size: 18px;
+    }
+    .actionsMealPlan{
+      flex-direction: column;
+    }
+    .actionsMealPlan{
+      flex-direction: column;
+      gap: 10px;
+    }
+    .actionsMealPlan button{
+            width: 50%;
+    }
+  

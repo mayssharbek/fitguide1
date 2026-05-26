@@ -1,11 +1,15 @@
  import { useEffect, useState } from "react";
  import './WeaklyProgress.css'
 
-const WeeklyProgress =() =>{
+const WeeklyProgress =({}) =>{
   const [week, setWeek] = useState([]);
-
+  const [completed, setCompleted] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [consistency, setConsistency] = useState(0);
 
   useEffect(() => {
+    const loadData = ()=>{
+
     const stored = JSON.parse(localStorage.getItem("meals") || "{}");
 
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -21,7 +25,7 @@ const WeeklyProgress =() =>{
 
       const total = Object.values(meals)
         .flat()
-        .reduce((sum, f) => sum + (f?.calories || 0), 0);
+        .reduce((sum, f) => sum + (f?.kcal || f?.calories || 0), 0);
 
       let status = "empty";
 
@@ -34,8 +38,73 @@ const WeeklyProgress =() =>{
     });
 
     setWeek(result);
-   
+  
+    let completedCount = 0;
+
+    for (let i = 0; i < 7; i++) {
+    
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+    
+      const dateKey = d.toISOString().split("T")[0];
+    
+      const meals = stored[dateKey] || {
+        Breakfast: [],
+        Lunch: [],
+        Dinner: [],
+        Snack: []
+      };
+    
+      const totalMeals =
+        (meals.Breakfast?.length || 0) +
+        (meals.Lunch?.length || 0) +
+        (meals.Dinner?.length || 0) +
+        (meals.Snack?.length || 0);
+    
+      if (totalMeals > 0) {
+        completedCount++;
+      }
+    }
+
+  const consistencyValue = Math.round((completedCount / 7) * 100);
+
+  let streakCount =0;
+
+ const sortedDays = Object.keys(stored).sort().reverse();
+
+ for (let day of sortedDays) {
+
+  const meals = stored[day];
+
+  const totalMeals =
+  (meals.Breakfast?.length || 0) +
+  (meals.Lunch?.length || 0) +
+  (meals.Dinner?.length || 0) +
+  (meals.Snack?.length || 0);
+
+  if (totalMeals > 0) {
+    streakCount++;
+  } else {
+    break;
+  }
+}
+setCompleted(completedCount);
+setStreak(streakCount);
+setConsistency(consistencyValue);
+    }
+
+  loadData()
+  window.addEventListener("mealsUpdated", loadData)
+   return()=>{
+    window.removeEventListener("mealsUpdated" , loadData)
+   }
   }, []);
+
+
+   
+
+
+
 
   return (
     <div className="weekly-container">
@@ -59,6 +128,23 @@ const WeeklyProgress =() =>{
         ))      
 }
 </div>
+
+  <div className="statsRow">
+   <div className="statCard">
+       <h3>{streak}</h3>
+       <p>Current Streak</p>
+   </div>
+   <div className="statCard">
+       <h3>{completed}/7</h3>
+       <p> Days Completed</p>
+   </div>
+   <div className="statCard">
+       <h3>{consistency}%</h3>
+       <p>Consitency</p>
+   </div>
+  </div>
+
+
 </div>
   )}
     export default WeeklyProgress
