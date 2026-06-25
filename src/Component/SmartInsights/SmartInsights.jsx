@@ -1,114 +1,134 @@
 import { useEffect, useState } from "react";
 import "./SmartInsights.css";
+import {
+  getMealLogs,
+  getWeightLogs,
+} from "../../services/api";
 
 const SmartInsights = ({ insightsTitle }) => {
-
   const [calories, setCalories] = useState(0);
   const [water, setWater] = useState(0);
   const [streak, setStreak] = useState(0);
+  const [weightMessage, setWeightMessage] = useState(
+    "No weight data yet"
+  );
 
   useEffect(() => {
+    const loadData = async () => {
+      try {
+        
+        const mealRes = await getMealLogs();
 
-    const loadData = () => {
+        if (mealRes.status) {
+          let totalCalories = 0;
 
+          mealRes.data.forEach((log) => {
+            totalCalories +=Number(log.meal?.calories  ||0) *Number(log.quantity||  1);
+          });
 
-      const storedMeals = JSON.parse(localStorage.getItem("meals") || "{}");
+          setCalories(totalCalories);
 
-      const today =new Date().toISOString().split("T")[0];
-
-      const todayMeals =storedMeals[today] || {};
-
-      let totalCalories = 0;
-
-      Object.values(todayMeals)
-        .flat()
-        .forEach((item) => {
-
-          totalCalories +=( item.calories || item.kcal || 0);
-
-        });
-
-      setCalories(totalCalories);
+          
+          setStreak(mealRes.data.length);
+        }
 
    
-      const savedWater = Number(localStorage.getItem("water")) || 0;
+        const weightRes = await getWeightLogs();
 
-      setWater(savedWater);
+        if (
+          weightRes.status &&
+          weightRes.data.length >= 2
+        ) {
+          const first =
+            Number(weightRes.data[0].weight);
 
-      
-      let streakCount = 0;
+          const last =
+            Number(
+              weightRes.data[
+                weightRes.data.length - 1
+              ].weight
+            );
 
-      const sortedDays =
-         Object.keys(storedMeals)
-          .sort()
-          .reverse();
-
-      for (let day of sortedDays) {
-
-        const meals =  storedMeals[day] || {};
-
-        const totalMeals =
-          (meals.Breakfast?.length || 0) +
-          (meals.Lunch?.length || 0) +
-          (meals.Dinner?.length || 0) +
-          (meals.Snack?.length || 0);
-
-        if (totalMeals > 0) {
-          streakCount++;
-        } else {
-          break;
+          if (last < first) {
+            setWeightMessage(
+              "Weight is decreasing toward your goal 📉"
+            );
+          } else if (last > first) {
+            setWeightMessage(
+              "Weight is increasing 📈"
+            );
+          } else {
+            setWeightMessage(
+              "Weight is stable ⚖️"
+            );
+          }
         }
-      }
 
-      setStreak(streakCount);
+        // ===== Water =====
+        const today = new Date()
+          .toISOString()
+          .split("T")[0];
+
+        const savedWater =
+          Number(
+            localStorage.getItem(
+              water`${today}`
+            )
+          ) || 0;
+
+        setWater(savedWater);
+
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     loadData();
 
-    window.addEventListener( "mealsUpdated",loadData);
+    const handler = () => loadData();
+
+    window.addEventListener(
+      "mealsUpdated",
+      handler
+    );
+
+    window.addEventListener(
+      "weightsUpdated",
+      handler
+    );
 
     return () => {
+      window.removeEventListener(
+        "mealsUpdated",
+        handler
+      );
 
-      window.removeEventListener( "mealsUpdated", loadData);
-
+      window.removeEventListener(
+        "weightsUpdated",
+        handler
+      );
     };
-
   }, []);
 
   return (
-
-    <div className='insighsContainer'>
-
+    <div className="insighsContainer">
       <h2>{insightsTitle}</h2>
 
-      <div className='insights greenBox'>
-        Your calories intake is
-        {" "}
-        {calories}
-        {" "}
-        kcal today
+      <div className="insights greenBox">
+        Your calories intake is {calories} kcal today
       </div>
 
-      <div className='insights blueBox'>
-        Weight trend is moving toward your goal
+      <div className="insights blueBox">
+        {weightMessage}
       </div>
 
-      <div className='insights orangeBox'>
-        You logged meals
-        {" "}
-        {streak}
-        {" "}
-        days in a row
+      <div className="insights orangeBox">
+        You logged {streak} meals today
       </div>
 
-      <div className='insights purpleBox'>
-        Water intake is
-        {" "}
-        {water}
-        {" "}
-        cups today
+      <div className="insights purpleBox">
+        Water intake is {water} cups today
       </div>
-
     </div>
   );
 };

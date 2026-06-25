@@ -1,20 +1,27 @@
-import { use, useContext, useState } from 'react'
+import {  useContext, useState } from 'react'
 import './TellAboutUs.css'
 import { useNavigate } from 'react-router'
-import SliderContext, { SliderProvider } from '../../Context/SliderContext'
+import {SliderContext , SliderProvider } from '../../Context/SliderContext'
+import { createProfile } from '../../services/api'
 
 const TellAboutUs = ({FoodImage , titleTellUs , descriptionTellUs}) => {
   const navigate = useNavigate()
-    const[formdata , setFormData] = useState({
-     Sex: "",
-     Height: "",
-     Weight: "",
-     Age: "",
-     BodyFat: "",
-     Activity: ""
-    })
+  const cx= useContext(SliderContext)
+ console.log(cx)
+    const { formData , setFormData, nextStep} = useContext(SliderContext);
+     
+   /* const[formData , setFormData] = useState({
+     sex: "",
+     height: "",
+     weight: "",
+     age: "",
+     body_fat: "",
+     goal_type: "",
+     activity_level: "",
+     diet_type:""
+    })*/
+ 
 
-    const {nextStep} = useContext(SliderContext);
 
    const fakeApi = (data) =>{
     return new Promise((resolve)=>{
@@ -25,21 +32,22 @@ const TellAboutUs = ({FoodImage , titleTellUs , descriptionTellUs}) => {
    }
 
    
-    const handleChange = (e)=>{
-        setFormData({
-            ...formdata,
-            [e.target.name]: e.target.value
-        });
-    }
+   const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
    const handleSelect = (name , value) =>{
      setFormData({
-        ...formdata,
+        ...formData,
         [name]:value
 
      });
    };
    const handleSubmit = async()=>{
-    const res = await fakeApi(formdata);
+    const res = await fakeApi(formData);
     nextStep();
     if (res.success){
       navigate("/dashboard/goal")
@@ -49,6 +57,63 @@ const TellAboutUs = ({FoodImage , titleTellUs , descriptionTellUs}) => {
     alert("Saved successfully")
    }
 
+   const normalize = (value) => {
+    if (!value) return "";
+  
+    return value.charAt(0).toUpperCase() + value.slice(1);
+  };
+
+   const handleSubmit1 = async () => {
+    try {
+      console.log(formData)
+      console.log("CREATE CLICKED");
+  
+      const profileData = {
+        gender: formData.sex.toLowerCase(),
+        height: Number(formData.height),
+        current_weight: Number(formData.weight),
+        target_weight:Number(formData.target_weight) || null,
+        activity_level: normalize(formData.activity_level).toLowerCase(),
+        goal_type: normalize(formData.goal_type).toLowerCase(),
+        diet_type: normalize(formData.diet_type).toLowerCase(),
+        age: Number(formData.age),
+        allergies: formData.allergies
+      };
+  
+      console.log("SEND:", profileData);
+  
+      const result = await createProfile(profileData);
+  
+      console.log("RESULT:", result.profile);
+  
+      if (!result) {
+        console.log("no response");
+        return;
+      }
+  
+       
+   if (result?.message === "profile created successfully") {
+     console.log("PROFILE CREATED");
+     navigate("/app/profile");
+  return;
+}
+
+// ❌ فشل
+console.log("API ERROR:", result);
+     /* if (result?.massage !== 200 || result.status !== 201) {
+        console.log("Api error " , result)
+        console.log("error detalies" , result?.data?.errors)
+        return
+        
+      } 
+      navigate("/app/profile");
+      }*/
+    }
+     catch (error) {
+      console.log("CATCH ERROR:", error);
+    }
+  };
+      
 
 
   return (
@@ -68,33 +133,47 @@ const TellAboutUs = ({FoodImage , titleTellUs , descriptionTellUs}) => {
            </div>
 
            <label>Height(cm)</label>
-           <input name='height' onChange={handleChange}/>
-
+           <input name='height' onChange={handleChange} value={formData.height}/>
+          
            <label>Weight(kg)</label>
-           <input name='Weight' onChange={handleChange}/>
+           <input name='weight' onChange={handleChange} value={formData.weight}/>
+            
+           <label> Target Weight(kg)</label>
+           <input name='target_weight' onChange={handleChange} value={formData.target_weight}/>
 
            <label>Age</label>
-           <input name='age' onChange={handleChange}/>
+           <input name='age' onChange={handleChange} value={formData.age}/>
 
            <label>Body Fat</label>
            <div className='BodyFat'>
-             <button onClick={()=>{handleSelect("bodyfat","low")}}>Low</button>
-             <button onClick={()=>{handleSelect("bodyfat","Medium")}}>Medium</button>
-             <button onClick={()=>{handleSelect("bodyfat","height")}}>Height</button>
+             <button onClick={()=>{handleSelect("body_fat","low")}}>low</button>
+             <button onClick={()=>{handleSelect("body_fat","medium")}}>medium</button>
+             <button onClick={()=>{handleSelect("body_fat","high")}}>higt</button>
            </div>
  
           <label>Activity Level</label>
-           <select name='activity' onChange={handleChange} className='select'>
-            <option>Sedentary</option>
-            <option>Light</option>
-            <option>Moderate</option>
-            <option>Active</option>
-            <option>Very active</option>
+           <select name='activity_level' onChange={handleChange} className='select' value={formData.activity_level}
+           >
+            <option value="">Select</option>
+            <option value="sedentary">Sedentary</option>
+            <option value="light">Light</option>
+            <option value="moderate">Moderate</option>
+            <option value="active">Active</option>
+            <option value="very active">Very active</option>
 
            </select>
 
            <button className='continue' onClick={handleSubmit}>Continue</button>
-
+           <button
+  type="button"
+  onClick={() => {
+    console.log("BUTTON WORKS");
+    handleSubmit1()
+    alert("WORKS");
+  }}
+>
+  Create
+</button>
 
         </div>
 

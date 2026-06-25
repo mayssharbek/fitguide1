@@ -1,87 +1,73 @@
-           
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import './Goal.css'
 import { useNavigate } from 'react-router'
-import { useContext } from 'react'
 import SliderContext from '../../Context/SliderContext'
 
 
 const Goal = () => {
-    const navigate = useNavigate()
-    const [goal , setGoal] = useState("")
-    const {prevStep} =useContext(SliderContext)
+  const navigate = useNavigate()
+  const { formData, setFormData, prevStep } = useContext(SliderContext)
 
-   const fakeApi = (data) =>{
-    return new Promise((resolve)=>{
-       setTimeout(()=>{
-         resolve({success:true});
-       },1000);
-    })
-   }
+  const handleSelect = (value) => {
+    setFormData(prev => ({
+      ...prev,
+      goal_type: value
+    }))
+  }
 
-
-
-
-   const handleSubmit = async()=>{
-    const res = await fakeApi(goal);
-    if (res.success){
-      navigate("/dashboard/systemeat")
+  const handleSubmit = () => {
+    if (!formData.goal_type) {
+      alert("select goal first")
+      return
     }
 
-    alert("Saved successfully")
-   }
+    navigate("/dashboard/systemeat")
+  }
 
-   const backSubmit = () =>{
-      prevStep();
-      navigate(-1);
-   }
-
+  const backSubmit = () => {
+    prevStep()
+    navigate(-1)
+  }
 
   return (
-    
     <div className='containerGoal'>
       <div className="cardGoal">
+
         <h1>What is your goal?</h1>
-        <p className="subtitle">
-          We'll adjust your daily nutrition targets to match your goals.
-        </p>
 
-
-        <p className="label">I want to</p>
         <div className="goals">
+
           <button
-            className={goal === "lose" ? "goal active" : "goal"}
-            onClick={() => setGoal("lose")}
+            className={formData.goal_type === "lose_fat" ? "goal active" : "goal"}
+            onClick={() => handleSelect("lose_fat")}
           >
             Lose fat
           </button>
 
           <button
-            className={goal === "maintain" ? "goal active" : "goal"}
-            onClick={() => setGoal("maintain")}
+            className={formData.goal_type === "maintain_weight" ? "goal active" : "goal"}
+            onClick={() => handleSelect("maintain_weight")}
           >
             Maintain weight
           </button>
 
           <button
-            className={goal === "build" ? "goal active" : "goal"}
-            onClick={() => setGoal("build")}
+            className={formData.goal_type === "build_muscle" ? "goal active" : "goal"}
+            onClick={() => handleSelect("build_muscle")}
           >
             Build muscle
           </button>
+
         </div>
 
         <div className="actions">
-          <button className="continue" onClick={handleSubmit}>Continue →</button>
-          <button className="continue" onClick={backSubmit}>Back</button>
+          <button onClick={handleSubmit}>Continue →</button>
+          <button onClick={backSubmit}>Back</button>
         </div>
+
       </div>
- </div>
-  );
+    </div>
+  )
 }
-   
-  
 
 export default Goal
-
- 

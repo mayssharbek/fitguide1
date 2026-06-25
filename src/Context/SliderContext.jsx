@@ -1,8 +1,19 @@
-import React, { createContext, useState } from "react";
+import  { createContext, useState } from "react";
 
-export const SliderContext = createContext();
+  export const SliderContext = createContext();
 
 export const SliderProvider = ({ children }) => {
+  const [formData, setFormData] = useState({
+    sex: "",
+    height: "",
+    weight: "",
+    age: "",
+    body_fat: "",
+    activity_level: "",
+    goal_type: "",
+    diet_type: "",
+    allergies: []
+  });
 
   const [step, setStep] = useState(0);
 
@@ -13,9 +24,9 @@ export const SliderProvider = ({ children }) => {
   const prevStep = () => {
     setStep((prev) => prev - 1);
   };
-
+  
   return (
-    <SliderContext.Provider value={{ step, nextStep, prevStep }}>
+    <SliderContext.Provider value={{formData, setFormData, step, nextStep, prevStep }}>
       {children}
     </SliderContext.Provider>
   );

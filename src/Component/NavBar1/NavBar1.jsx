@@ -7,7 +7,7 @@ const NavBar1 = () => {
     const navigate = useNavigate();
   return (
     <div className= "navbar ">
-           <img src="/fitguide/assets/image/logo.jpg"  className='logo'/>
+           <img src="/FitGuideProject/assets/image/logo.jpg"  className='logo'/>
 
     
       <div className="nav-center">

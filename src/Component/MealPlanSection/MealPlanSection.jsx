@@ -1,244 +1,211 @@
-import { useEffect, useState } from 'react';
-import './MealPlanSection.css'
-import { useNavigate } from 'react-router';
+import { useEffect, useState } from "react";
+import "./MealPlanSection.css";
+import { useLocation, useNavigate } from "react-router";
 
+import {
+  getMealPlan,
+  generateMealPlan,
+  deleteMealPlan,
+  swapMeal,
+} from "../../services/api";
 
-const Days = ["sunday" , "monday" , "tuesday" , "wednesday" , "thursday" , "friday" ,"saturday"]
-const initialPlan={
-    id:1,
-   items: [
-    {
-      id: 101,
-      day_of_week: "sunday",
-      meal_type: "Breakfast",
-      name: "Oatmeal",
-      calories: 350,
-      protein: 20,
-      carbs: 45,
-      fat: 10,
-    },
-    {
-      id: 102,
-      day_of_week: "sunday",
-      meal_type: "Lunch",
-      name: "Chicken Rice",
-      calories: 600,
-      protein: 45,
-      carbs: 70,
-      fat: 15,
-    },
-    {
-      id: 103,
-      day_of_week: "monday",
-      meal_type: "Dinner",
-      name: "Salmon Salad",
-      calories: 500,
-      protein: 35,
-      carbs: 20,
-      fat: 25,
-    },
-  ],
-};
+const Days = [
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+];
 
-const getStartOfWeek = (date) => {
-  const d = new Date(date);
-  const day = d.getDay(); // 0 = Sunday
-  d.setDate(d.getDate() - day);
-  return d;
-};
+const MealPlanSection = ({ MealPlanTitle, MealPlanDesc }) => {
+  const [plan, setPlan] = useState(null);
+  const [selectedDay, setSelectedDay] = useState("monday");
+  const navigate = useNavigate();
+  const location = useLocation()
 
-const formatDate = (date) => {
-  return date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-  });
-}
+  // ================= LOAD API =================
+  const loadMealPlan = async () => {
+    try {
+      const data = await getMealPlan();
 
+      console.log("API RES:", data);
 
-
-const MealPlanSection = ({MealPlanTitle , MealPlanDesc}) => {
- 
- const[plan , setPlan] = useState(initialPlan);
- const [selectdDay , setSelectedDay] = useState("");
- const [startOfWeek , setStartOfWeek] = useState(getStartOfWeek(new Date()));
- const[showLibrary , setShowLibrary]= useState(false)
- const[selectedItem , setSelectedItem] =useState(null);
- const navigate = useNavigate()
-
- const generatePlan = ()=>{
-
-     const newPlan = {
-        ...initialPlan,
-        items:initialPlan.items.map((item)=>
-        ({
-                ...item,
-                calories: item.calories+Math.floor(Math.random()*50)
-            })),
-        }
-        setPlan(newPlan);
-
- }
-
-
-    const deletePlan = ()=>{
-        setPlan(null)
+      if (Array.isArray(data) && data.length > 0) {
+        setPlan(data[0]);
+      } else {
+        setPlan(null);
+      }
+    } catch (err) {
+      console.log("LOAD ERROR:", err);
     }
+  };
 
-    /*const handleSwap = (item)=>{
-      navigate("/app/foodlibrary", {
-        state: {
-          mealType: item.type,
-          swapTargetId : item.instanceId
-        }})
-        }*/
-        const handleSwap = (day, type) => {
-          navigate("/app/foodlibrary", {
-            state: {
-              from: "mealplan",
-              day:day,
-              type:type
-            }
-          });
-        };
-        useEffect(() => {
+  useEffect(() => {
+    loadMealPlan();
+  }, [location.state?.refresh]);
 
-          const loadPlan = () => {
-        
-            const stored =
-              JSON.parse(localStorage.getItem("mealPlan")) || {};
-        
-            setPlan(stored);
-        
-          };
-        
-          loadPlan();
-        
-          window.addEventListener("mealPlanUpdated",loadPlan);
-        
-          return () => {
-        
-            window.removeEventListener("mealPlanUpdated",loadPlan);
-          }; 
-        }, []);
+  // ================= GENERATE =================
+  const handleGenerate = async () => {
+    try {
+      const res = await generateMealPlan();
+      console.log("GENERATE:", res);
 
-    const selectMeal = (meal) => {
-      const updated = plan.items.map((item) =>
-        item.id === selectedItem.id ? { ...meal, id: item.id, day_of_week: item.day_of_week }: item
-      );
-    
-      setPlan({ ...plan, items: updated });
-      setShowLibrary(false);
-    };
+      if (res?.meal_plan) {
+        setPlan(res.meal_plan);
+      }
 
-    const logMeal = (item)=>{
-          alert(`logged:${item.name}`)
+     await loadMealPlan(); // refresh from server
+    } catch (err) {
+      console.log("GENERATE ERROR:", err);
     }
- 
-  const filteredItem =
-   plan?.items?.filter((i) => i.day_of_week === selectdDay) || [];
+  };
 
-  
-   const nextWeek = ()=>{
-    const next = new Date(startOfWeek);
-    next.setDate(next.getDate()+7);
-    setStartOfWeek(next);
-   }
+  // ================= DELETE =================
+  const handleDelete = async () => {
+    try {
+      if (!plan) return;
 
+      await deleteMealPlan(plan.id);
+      setPlan(null);
+    } catch (err) {
+      console.log("DELETE ERROR:", err);
+    }
+  };
 
-   const prevWeek = ()=>{
-    const prev = new Date(startOfWeek);
-      prev.setDate(prev.getDate()-7);
-      setStartOfWeek(prev);
-   }
+  // ================= SWAP =================
+  /*const handleSwap = async (itemId, mealId) => {
+    try {
+      await swapMeal(itemId, mealId);
+      loadMealPlan(); // refresh
+    } catch (err) {
+      console.log("SWAP ERROR:", err);
+    }
+  };*/
+  const handleSwap = (item) => {
+    navigate("/app/foodlibrary", {
+      state: {
+        mealPlanItemId: item.id,
+        mealType: item.meal_type,
+        day: item.day_of_week,
+      },
+    });
+  };
 
-  
-
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate()+6);
-
-   
-
-  const getDateOfDay = (dayIndex)=>{
-    const date = new Date(startOfWeek);
-    date.setDate(startOfWeek.getDate()+dayIndex)
-    return date
+  /*const loadMeal = async(mealId) =>{
+    console.log("LOADING MEAL " , mealId)
+    const meal = await getMealPlan1(mealId)
+    console.log("meal res" , meal)
+    setMealDetalies((prev)=>({
+      ...prev ,
+      [mealId]: meal
+    })       
+    )
   }
 
+  useEffect(()=>{
+    plan?.meal_plan_items?.forEach((item)=>{
+      loadMeal(item.meal_id)
+    })
+  },[plan])*/
 
+
+
+  // ================= FILTER ITEMS =================
+  const filteredItems =
+    plan?.meal_plan_items?.filter(
+      (item) => item.day_of_week === selectedDay
+    ) || [];
+    console.log("mealplanitem",plan?.meal_plan_items)
+
+  console.log("PLAN:", plan);
+  console.log("ITEMS:", plan?.meal_plan_items);
+  console.log("FILTERED:", filteredItems);
+ 
+
+  // ================= EMPTY STATE =================
+  if (!plan) {
+    return <p>No meal plan found</p>;
+  }
 
   return (
-    <div className='MealPlanContainer'>
+    <div className="MealPlanContainer">
+
+      {/* HEADER */}
       <div className="headerMealPlan">
         <div>
-          <h2> {MealPlanTitle}</h2>
+          <h2>{MealPlanTitle}</h2>
           <p>{MealPlanDesc}</p>
         </div>
 
-        <button className="primary-btnMeal" onClick={generatePlan}>
-           Generate New Plan
+        <button className="primary-btnMeal" onClick={handleGenerate}>
+          Generate New Plan
         </button>
       </div>
 
-      <div className="week-nav">
-        <button onClick={prevWeek}>←</button>
-        <span>This Week {formatDate(startOfWeek)} {formatDate(endOfWeek)}</span> 
-        <button onClick={nextWeek}>→</button>
+
+
+      <div style={{ background: "#eee", padding: 10 }}>
+        <p>Items count: {plan?.meal_plan_items?.length}</p>
+        <p>Selected Day: {selectedDay}</p>
+        <p>Plan ID: {plan?.id}</p>
       </div>
 
+
+
+
+      {/* DAYS */}
       <div className="days">
-        {Days.map((d , index) => {
-          const date = getDateOfDay(index)
-          return(
-            <button
+        {Days.map((d) => (
+          <button
             key={d}
-            className={selectdDay === d ? "active" : ""}
+            className={selectedDay === d ? "active" : ""}
             onClick={() => setSelectedDay(d)}
           >
-           <div>{d}</div>
-           <small>
-           {date.toLocaleDateString("en-US", {
-                                    month: "short",
-                                     day: "numeric",
-            })};
-           </small>
+            {d}
           </button>
-          )
-        }     
-        )}
-      </div>
-
-      <div className="gridMealPlan">
-        {filteredItem.map((item) => (
-          <div className="cardMealPlan" key={item.id}>
-            <div className="badgeMealPlan">
-              {item.meal_type} • {item.calories} kcal
-            </div>
-
-            <div className="mealPlan-info">
-              <div>
-                <h4>{item.name}</h4>
-                <p>
-                  P:{item.protein} C:{item.carbs} F:{item.fat}
-                </p>
-              </div>
-            </div>
-
-            <div className="actionsMealPlan">
-             <button onClick={() => handleSwap(selectdDay, item.meal_type)}> Swap 🔄</button>
-              <button onClick={() => logMeal(item)}> Log</button>
-            </div>
-          </div>
         ))}
       </div>
 
-      {plan && (
-        <button className="deleteMealPlan" onClick={deletePlan}>
-           Delete Plan
-        </button>
-      )}
+      {/* ITEMS */}
+      <div className="gridMealPlan">
+        {filteredItems.map((item) => (
+          <div className="cardMealPlan" key={item.id}>
+
+            <div className="badgeMealPlan">
+              {item.meal_time} • {item.meal?.calories} kcal
+            </div>
+
+            <h4>{item.meal?.name}</h4>
+
+            <p>
+              P:{item.meal?.protein} C:{item.meal?.carbs} F:{item.meal?.fat}
+            </p>
+
+            <div className="actionsMealPlan">
+              <button onClick={() => handleSwap(item)}
+              >
+                Swap 🔄
+              </button>
+            </div>
+
+          </div>
+        ))}
+    
+
+
+
+
+      </div>
+
+      {/* DELETE */}
+      <button className="deleteMealPlan" onClick={handleDelete}>
+        Delete Plan
+      </button>
+
     </div>
+  );
+};
 
-  )
-}
-
-export default MealPlanSection
+export default MealPlanSection;

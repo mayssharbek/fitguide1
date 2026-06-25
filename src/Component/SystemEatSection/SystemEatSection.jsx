@@ -1,13 +1,14 @@
 import { useContext, useState } from 'react'
 import './SystemEatSection.css'
 import { useNavigate } from 'react-router'
-import SliderContext from '../../Context/SliderContext'
+import {SliderContext} from '../../Context/SliderContext'
 
 const SystemEatSection = ({Image , titleSystemEat ,descriptionSystemEat }) => {
 
-    const[selectDiet , setSelectDiet]=useState("normal")
+   /* const[selectDiet , setSelectDiet]=useState("normal")*/
     const navigate = useNavigate()
-    const {prevStep} = useContext(SliderContext);
+    const{formData , setFormData , prevStep} =useContext(SliderContext);
+    
 
     const fakeApi = (data) =>{
         return new Promise((resolve)=>{
@@ -30,42 +31,57 @@ const SystemEatSection = ({Image , titleSystemEat ,descriptionSystemEat }) => {
         }
         ,
         {
-            id : "Vegetarian",
+            id : "vegetarian",
             title : "Vegetarian",
             desc: "Excludes:Meat,fish,poultry"
         },
         {
-            id : "high-protin",
+            id : "high protine",
             title : "High Protin",
             desc: "Focus on protein-rich foods"
         },
         {
-            id : "low-carb",
+          id : "low carb",
             title : "Low Carb",
             desc: "Reduced carbohydrates intake"
         },
         {
-            id : "diabetic",
+          id : "diabetic",
             title : "Diabetic",
             desc: "low suger foods"
         },
         {
             
-            id : "iron-rich",
+            id : "iron rich",
             title : "Iron Rich",
             desc: "Foods rich in iron"
         }
        ]
 
+       const handleSelect = (id)=>{
+        setFormData(prev =>({
+          ...prev ,
+          diet_type:id
+        }))
+       }
 
-   const handleSubmit = async()=>{
-    const res = await fakeApi(selectDiet);
-    if (res.success){
-       navigate("/dashboard/avoideat")
+ 
+
+
+
+
+
+
+   const handleSubmit = () => {
+    if (!formData.diet_type) {
+      alert("Please select diet first")
+      return
     }
 
-    alert("Saved successfully")
-   }
+    console.log("FINAL FORM DATA:", formData)
+
+    navigate("/dashboard/avoideat")
+  }
 
 
    const backSubmit = ()=>{
@@ -88,11 +104,11 @@ const SystemEatSection = ({Image , titleSystemEat ,descriptionSystemEat }) => {
          <div className='diet_list'>
            {diets.map((diet)=>{
               return(
-                <div  key={diet.id} className={`diet-item${selectDiet==diet.id ? "active" : ""}`}
-                onClick={()=>setSelectDiet(diet.id)}>
+                <div  key={diet.id} className={`diet-item${formData.diet_type==diet.id ? "active" : ""}`}
+                onClick={()=>handleSelect(diet.id)}>
                  
                  <div className='radio'>
-                    {selectDiet===diet.id && <div className='redio-fill'></div>}
+                    {formData.diet_type===diet.id && <div className='redio-fill'></div>}
                     </div>
                     
                     <div className='diet-text'>

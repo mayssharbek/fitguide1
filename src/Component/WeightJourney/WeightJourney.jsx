@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
 import "./WeightJourney.css";
+import { createWeightLogs, getWeightLogs } from "../../services/api";
 
 export default function WeightJourney() {
 
   const [weights, setWeights] = useState([]);
 
 
-  const loadWeights = () => {
+  const loadWeights = async () => {
 
-    const stored = JSON.parse(
-      localStorage.getItem("weightLogs") || "[]"
-    );
+   try{
+    const response = await getWeightLogs()
 
-    setWeights(stored);
+    console.log("weightLogs" , response);
+
+    setWeights(response.data || []);
+   }
+
+   catch (error) {
+    console.log(error.response?.data);
+  }
+
   };
 
 
@@ -20,15 +28,16 @@ export default function WeightJourney() {
 
     loadWeights();
 
+    const handler = () => loadWeights();
     window.addEventListener(
       "weightsUpdated",
-      loadWeights
+      handler
     );
 
     return () => {
       window.removeEventListener(
         "weightsUpdated",
-        loadWeights
+        handler
       );
     };
 
@@ -52,7 +61,7 @@ export default function WeightJourney() {
   ).toFixed(1);
 
   // إضافة وزن جديد
-  const addWeight = () => {
+  const addWeight = async() => {
 
     const newWeight = prompt(
       "Enter your weight"
@@ -60,29 +69,33 @@ export default function WeightJourney() {
 
     if (!newWeight) return;
 
-    const logs = JSON.parse(
-      localStorage.getItem("weightLogs") || "[]"
+    try {
+      const payload = {
+        weight: Number(newWeight),
+        log_date: new Date().toISOString().split("T")[0],
+      };
+
+      console.log("SENDING WEIGHT:",payload);
+
+      const response = await createWeightLogs(payload);
+
+      console.log("POST RESPONSE:",response);
+      /*console.log("WEIGHT ERROR" , response.errors?.weight)
+      console.log("Date error" , response.errors?.log_date)*/
+     window.dispatchEvent(
+       new Event("weightsUpdated")
     );
-
-    const newEntry = {
-      weight: Number(newWeight),
-      date: new Date()
-        .toISOString()
-        .split("T")[0]
-    };
-
-    logs.push(newEntry);
-
-    localStorage.setItem(
-      "weightLogs",
-      JSON.stringify(logs)
+  }
+   catch (error) {
+    console.log(
+      error.response?.data
     );
+  }
+};
 
-    // تحديث فوري
-    window.dispatchEvent(
-      new Event("weightsUpdated")
-    );
-  };
+    
+
+
 
   return (
     <div className="weightCard">

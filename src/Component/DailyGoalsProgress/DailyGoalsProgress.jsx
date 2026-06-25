@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+ import { useEffect, useState } from "react";
 import "./DailyGoalsProgress.css";
+import { getMealLogs } from "../../services/api";
 
 export default function DailyGoal() {
-
+  const [logs, setLogs] = useState([]);
   const [calories, setCalories] = useState(0);
   const [protein, setProtein] = useState(0);
   const [water, setWater] = useState(0);
@@ -11,168 +12,173 @@ export default function DailyGoal() {
   const proteinGoal = 120;
   const waterGoal = 8;
 
-
   const addWater = () => {
+    const today = new Date().toISOString().split("T")[0];
 
     const currentWater =
-      Number(localStorage.getItem("water")) || 0;
+      Number(localStorage.getItem(water`${today}`)) || 0;
 
     const updatedWater = currentWater + 1;
 
-    localStorage.setItem( "water", updatedWater );
+    localStorage.setItem(
+      `water${today}`,
+      updatedWater
+    );
 
     setWater(updatedWater);
   };
 
   useEffect(() => {
+    const loadLogs = async () => {
+      try {
+        const res = await getMealLogs();
 
-    const loadData = () => {
+        console.log("MEAL LOGS:", res);
 
-      const today =new Date().toISOString().split("T")[0];
+        if (res.status) {
+          setLogs(res.data || []);
+        }
 
-      const stored = JSON.parse(localStorage.getItem("meals") || "{}");
+        const today = new Date().toISOString().split("T")[0];
 
-      const meals = stored[today] || {};
+        const savedWater =
+          Number(localStorage.getItem(water`${today} `))||  0;
 
-      let totalCalories = 0;
-      let totalProtein = 0;
+        setWater(savedWater);
 
-      Object.values(meals)
-        .flat()
-        .forEach((item) => {
-
-          totalCalories +=(item.calories || item.kcal || 0);
-
-          totalProtein +=(item.protein || 0);
-
-        });
-
-      setCalories(totalCalories);
-      setProtein(totalProtein);
-
-     
-      const savedWater = Number(localStorage.getItem("water")) || 0;
-
-      setWater(savedWater);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    loadData();
+    loadLogs();
 
-    window.addEventListener("mealsUpdated",loadData);
+    const handler = () => loadLogs();
+
+    window.addEventListener("mealsUpdated", handler);
 
     return () => {
-
-      window.removeEventListener("mealsUpdated",loadData);
-
+      window.removeEventListener(
+        "mealsUpdated",
+        handler
+      );
     };
-
   }, []);
 
-  const caloriePercent =Math.min((calories / calorieGoal) * 100,100 );
+  useEffect(() => {
+    let totalCalories = 0;
+    let totalProtein = 0;
 
-  const proteinPercent =  Math.min((protein / proteinGoal) * 100,100
-    );
+    logs.forEach((log) => {
+      const qty = Number(log.quantity || 1);
 
-  const waterPercent =Math.min((water / waterGoal) * 100,100);
+      totalCalories +=Number(log.meal?.calories || 0) * qty;
+
+      totalProtein +=Number(log.meal?.protein || 0) * qty;
+    });
+
+    setCalories(totalCalories);
+    setProtein(totalProtein);
+
+    console.log("Calories:", totalCalories);
+    console.log("Protein:", totalProtein);
+
+  }, [logs]);
+
+  const caloriePercent = Math.min(
+    (calories / calorieGoal) * 100,
+    100
+  );
+
+  const proteinPercent = Math.min(
+    (protein / proteinGoal) * 100,
+    100
+  );
+
+  const waterPercent = Math.min(
+    (water / waterGoal) * 100,
+    100
+  );
 
   return (
-
     <div className="goalCardProgress">
-
       <h2>Daily Goals Progress</h2>
 
       <div className="goalsRow">
 
-   
         <div className="circleBoxProgress">
-
           <div
             className="circleProgress"
             style={{
               background: `conic-gradient(
                 #85c318 ${caloriePercent}%,
                 #eee ${caloriePercent}%
-              )`
+              )`,
             }}
           >
-
             <div className="innerCircleProgress">
-
               <strong>
                 {Math.round(caloriePercent)}%
               </strong>
-
             </div>
-
           </div>
 
           <p>
-            Calories<br /> {calories}/{calorieGoal}
+            Calories
+            <br />
+            {calories}/{calorieGoal}
           </p>
-
         </div>
 
- 
         <div className="circleBoxProgress">
-
           <div
             className="circleProgress"
             style={{
               background: `conic-gradient(
                 orange ${proteinPercent}%,
                 #eee ${proteinPercent}%
-              )`
+              )`,
             }}
           >
-
             <div className="innerCircleProgress">
-
               <strong>
                 {Math.round(proteinPercent)}%
               </strong>
-
             </div>
-
           </div>
 
           <p>
-            Protein <br /> {protein}g/{proteinGoal}g
+            Protein
+            <br />
+            {protein}g/{proteinGoal}g
           </p>
-
         </div>
 
-       
         <div className="circleBoxProgress">
-
           <div
             className="circleProgress"
             style={{
               background: `conic-gradient(
                 #4db7ff ${waterPercent}%,
                 #eee ${waterPercent}%
-              )`
+              )`,
             }}
           >
-
             <div className="innerCircleProgress">
-
               <strong>
                 {Math.round(waterPercent)}%
               </strong>
-
             </div>
-
           </div>
 
           <p>
-            Water<br />{water}/{waterGoal} cups
+            Water
+            <br />
+            {water}/{waterGoal} cups
           </p>
-
         </div>
-
-      </div>
-
-      <button
+[25/06/2026 04:00 م] Mays sharbek: </div>
+ <button
         className="waterBtn"
         onClick={addWater}
       >
@@ -182,7 +188,6 @@ export default function DailyGoal() {
       <div className="motivationBox">
         Great consistency today! Keep going.
       </div>
-
     </div>
   );
 }

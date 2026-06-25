@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './MacrosSection.css'
 import { useNavigate } from 'react-router';
+import { getMealLogs } from '../../services/api';
 
 const MacrosSection = ({MacrosTitle}) => {
   const navigate = useNavigate()
@@ -9,6 +10,7 @@ const MacrosSection = ({MacrosTitle}) => {
         carbs : 0,
         fats : 0
     });
+    const[logs , setLogs] = useState([])
     const goals = {
         protein : 140,
         carbs : 230,
@@ -17,15 +19,63 @@ const MacrosSection = ({MacrosTitle}) => {
     };
 
 
-    const calculateMacros = () => {
-        const today = new Date().toISOString().split("T")[0];
-        const stored = JSON.parse(localStorage.getItem("meals") || "{}");
-        const meals = stored[today] || { Breakfast: [], Lunch: [], Dinner: [], Snack: [] };
+    const calculateMacros = async() => {
+      try {
+        const logs = await getMealLogs();
+        console.log("logs" , logs)
   
-        let p = 0, c = 0, f = 0;
+        let p = 0,
+            c = 0,
+            f = 0;
+  
+        logs.data.forEach((log) => {
+          const meal = log.meal; // مهم: لازم backend يرجّع meal داخل log
+  
+          p += Number(meal?.protein || 0) * (log.quantity || 1);
+          c += Number(meal?.carbs ||  0) * (log.quantity || 1);
+          f += Number(meal?.fats||  0) * (log.quantity || 1);
+        });
+  
+        setMacros({ protein: p, carbs: c, fats: f , mealsCount: logs.length });
+  
+        console.log("Macros update");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const loadLogs = async()=>{
+      try{
+        const res = await getMealLogs();
+        console.log("MEAL LOGS:", res);
+        setLogs(Array.isArray(res?.data)? res.data : []);
+       
+        setLogs(res.data || []);
+      } 
+      catch (err) {
+        console.log(err);
+      }
+    };
+    useEffect(() => {
+      loadLogs();
+  
+      const handler = ()=>{
+        loadLogs()
+      } 
+      window.addEventListener("mealsUpdated" , handler)
+  
+      return()=>{
+        window.removeEventListener("mealsUpdated" , handler)
+      }
+    }, []);
+  
+    useEffect(() => {
+      calculateMacros();
+    }, [logs]);
+        
+       
 
 
-        Object.values(meals).forEach((mealArray)=>{
+        /*Object.values(meals).forEach((mealArray)=>{
             mealArray.forEach((food)=>{
                 p += Number(food.protine || 0 );  
                 c += Number(food.carbs|| 0);
@@ -33,20 +83,10 @@ const MacrosSection = ({MacrosTitle}) => {
             });
         });
         setMacros({protein:p , carbs:c , fats:f})
-    }
+    }*/
 
-        useEffect(()=>{
-
-            calculateMacros();
-         /*   "mealsUpdated" */
-            window.addEventListener("mealsUpdated", calculateMacros);
-  
-  
-          return () => window.removeEventListener("mealsUpdated", calculateMacros);
-      
-        },[])
        
-        
+       
     
 
      const items = [
