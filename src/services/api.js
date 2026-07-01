@@ -14,9 +14,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 const url = API_URL + "/api/auth/register"
 const url1= API_URL + "/api/profiles"
 const url2= API_URL + "/api/meals"
-const url3= API_URL+ "api/meal-plans"
+const url3= API_URL+ "/api/meal-plans"
 console.log(url3)
 console.log(url2)
+console.log(url)
 
 console.log(import.meta.env.VITE_API_URL)
 

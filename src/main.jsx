@@ -31,6 +31,7 @@ import MealLogs from './Pages/MealLogs/MealLogs'
 import MealPlan from './Pages/MealPlan/MealPlan'
 import Progress from './Pages/Progress/Progress'
 import EmailVerification from './Pages/EmailVerification/EmailVerification'
+import ProtectedRoute from './routes/ProtectedRoute'
 
 
 const routes = createBrowserRouter([
@@ -97,7 +98,10 @@ const routes = createBrowserRouter([
   },
   {
     path : "/dashboard",
-    element : <Dashboard/>,
+    element :(
+      <ProtectedRoute>
+         <Dashboard/>
+       </ProtectedRoute>),
     children : [
       {
       path : "tellus",
@@ -123,7 +127,11 @@ const routes = createBrowserRouter([
   ]},
   {
     path:"/app",
-    element:<DashboardLayout/>,
+    element:(
+     <ProtectedRoute>
+        <DashboardLayout/>
+       </ProtectedRoute>
+    ),
     children:[
       {
         path : "",
