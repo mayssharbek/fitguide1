@@ -31,9 +31,10 @@ const SignUp = () => {
   
       if (result.status === 201) {
         localStorage.setItem("token", result.data.token);
-  
+        localStorage.setItem("email", formData.email);
+        
         alert("Registered");
-        navigate("/dashboard");
+        navigate("/auth/emailverification");
       } else {
         console.log("error", result.data);
       }

@@ -24,7 +24,7 @@ const Root = () => {
   ]
   return (
     <>
-       <NavBar  logo="/FitGuideProject/assets/image/logo.jpg"  items ={items}  btn="SignUp/GetStarted"/>
+       <NavBar  logo="/fitguide1/assets/image/logo.jpg"  items ={items}  btn="SignUp/GetStarted"/>
        
     
     <Outlet/>

@@ -398,3 +398,23 @@ export const nutiritionTargetGet = async () => {
 
   return await response.json();
 };
+
+
+
+
+
+/*verification*/
+
+export const resendVerificationEmail = async () => {
+  const response = await fetch(`${API_URL}/api/email/resend`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${getToken()}`,
+      "Accept": "application/json",
+    },
+   
+  });
+console.log("status" , response.status)
+  return await response.json();
+};
+

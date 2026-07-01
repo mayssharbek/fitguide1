@@ -164,7 +164,7 @@ const routes = createBrowserRouter([
   
 ],
 {
-  basename : "/FitGuideProject"
+  basename : "/fitguide1"
 }
 )
 

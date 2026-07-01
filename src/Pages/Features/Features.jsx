@@ -10,17 +10,17 @@ import HealthData from "../HealthData/HealthData"
 const Features = () => {
   const navigate = useNavigate();
   const cards = [{
-     Image1 : "/FitGuideProject/assets/image/cardlogo1.jpg",
+     Image1 : "/fitguide1/assets/image/cardlogo1.jpg",
      title1 : "Personalized to Your Body",
      desc1 : "Our system uses your height,weight,age,and activity level to calculate the exact calories and nutrients your body needs to reach your goal."
   },
   {
-    Image1 : "/FitGuideProject/assets/image/cardlogo2.jpg",
+    Image1 : "/fitguide1/assets/image/cardlogo2.jpg",
     title1 : "Precision Macro Tracking",
     desc1 : "we balance your Proteins,Carbs,and Fats.Every meal is optimizer to keep you full,energized,and burning fat or building muscle effectively."
   },
   {
-    Image1 : "/FitGuideProject/assets/image/cardLogo3.jpg",
+    Image1 : "/fitguide1/assets/image/cardLogo3.jpg",
     title1 : "Track Your Transformation",
     desc1 : "As you lose weight or gain muscle,your needs change.Our system evolves with you, updating your meal portions as your input your weekly progress."
   }
@@ -35,7 +35,7 @@ const Features = () => {
   return (
     <>
     <Header>
-       <Hero image="/FitGuideProject/assets/image/fruite.jpeg" title="Features FitGuide" 
+       <Hero image="/fitguide1/assets/image/fruite.jpeg" title="Features FitGuide" 
          description1="Diverse group of people working out in gym, weight training, cardio machines, yoga area, bright modern fitness center, energetic vibe"
          btn = "Welcome"
       />

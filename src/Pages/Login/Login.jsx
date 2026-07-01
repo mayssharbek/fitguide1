@@ -54,10 +54,11 @@ const Login = () => {
       if(result?.status=== "success")
     {
       localStorage.setItem("token" , result.data.token)
-      localStorage.setItem("user" , result.data.user)
+      localStorage.setItem("user" , JSON.stringify(result.data.user))
+
     
        console.log("token" , result.data.token)
-       console.log("user" , result.data.user)
+       console.log("user" ,(result.data.user) )
       alert("Registered");
       navigate("/dashboard")}
 

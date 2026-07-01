@@ -7,7 +7,7 @@ const TellUs = () => {
   return (
     
       
-        <TellAboutUs FoodImage="/FitGuideProject/assets/image/tell.jpg" titleTellUs="Tell us about yourself"
+        <TellAboutUs FoodImage="/fitguide1/assets/image/tell.jpg" titleTellUs="Tell us about yourself"
          descriptionTellUs="This information helps us estimate your nutrition needs"/>
          
         

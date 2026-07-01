@@ -7,5 +7,5 @@ export default defineConfig({
   plugins: [react() ,
     tailwindcss(),
   ],
-  base: "/fitguide1",
+  base: "/fitguide1/",
 })

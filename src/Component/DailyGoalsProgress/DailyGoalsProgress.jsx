@@ -16,7 +16,7 @@ export default function DailyGoal() {
     const today = new Date().toISOString().split("T")[0];
 
     const currentWater =
-      Number(localStorage.getItem(water`${today}`)) || 0;
+      Number(localStorage.getItem(`water${today}`)) || 0;
 
     const updatedWater = currentWater + 1;
 
