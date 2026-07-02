@@ -126,7 +126,6 @@ const FoodLibrarySection = ({ titleLibraryFood }) => {
           <div key={food.id} className="food-card">
             <h3>{food.name}</h3>
             <p>{food.calories} kcal</p>
-
             <button onClick={() => handleSelectMeal(food)}>
               Swap
             </button>

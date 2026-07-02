@@ -73,6 +73,13 @@ const MealsSection = ({ titleMeal }) => {
     };
 
     loadMeals();
+    const handleUpdate = ()=>{
+      loadMeals();
+    }
+    window.addEventListener("mealPlanUpdated" , handleUpdate)
+    return()=>{
+      window.removeEventListener("mealPlanUpdated" , handleUpdate)
+    }
   }, []);
 
   const handleSwap = (meal) => {
