@@ -85,11 +85,14 @@ const MealPlanSection = ({ MealPlanTitle, MealPlanDesc }) => {
         start_date: start,
         end_date: end,
       });
+      if(res){
+        window.dispatchEvent(new Event("mealPlanUpdated"));
+      }
   
       console.log("NEW PLAN:", res);
   
       // 🔥 أهم سطر
-      window.dispatchEvent(new Event("mealPlanUpdated"));
+     
   
     } catch (err) {
       console.log(err);
