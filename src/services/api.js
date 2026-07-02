@@ -337,7 +337,7 @@ export const swapMeal = async (MealPlanItemId, mealId) => {
 };
 
 // ================= GENERATE =================
-export const generateMealPlan = async () => {
+export const generateMealPlan = async (payload) => {
   const res = await fetch(`${API_URL}/api/meal-plans/generate`, {
     method: "POST",
     headers: {
@@ -345,6 +345,7 @@ export const generateMealPlan = async () => {
       "Authorization": `Bearer ${getToken()}`,
       "Accept": "application/json",
     },
+    body:JSON.stringify(payload)
   });
 
   return await res.json();

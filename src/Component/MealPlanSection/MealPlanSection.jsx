@@ -25,6 +25,28 @@ const MealPlanSection = ({ MealPlanTitle, MealPlanDesc }) => {
   const [selectedDay, setSelectedDay] = useState("monday");
   const navigate = useNavigate();
   const location = useLocation()
+  const [weekRange, setWeekRange] = useState({ start: "", end: "" });
+
+
+  const getWeekRange = () => {
+    const start = new Date();
+  
+    const end = new Date();
+    end.setDate(start.getDate() + 6);
+  
+    return {
+      start: start.toISOString().split("T")[0],
+      end: end.toISOString().split("T")[0],
+    };
+  };
+
+  useEffect(() => {
+    const range = getWeekRange();
+      setWeekRange(range);
+  }, []);
+
+  
+
 
   // ================= LOAD API =================
   const loadMealPlan = async () => {
@@ -50,16 +72,27 @@ const MealPlanSection = ({ MealPlanTitle, MealPlanDesc }) => {
   // ================= GENERATE =================
   const handleGenerate = async () => {
     try {
-      const res = await generateMealPlan();
-      console.log("GENERATE:", res);
-
-      if (res?.meal_plan) {
-        setPlan(res.meal_plan);
-      }
-
-     await loadMealPlan(); // refresh from server
+      const today = new Date();
+  
+      const start = today.toISOString().split("T")[0];
+  
+      const endDate = new Date(today);
+      endDate.setDate(today.getDate() + 6);
+  
+      const end = endDate.toISOString().split("T")[0];
+  
+      const res = await generateMealPlan({
+        start_date: start,
+        end_date: end,
+      });
+  
+      console.log("NEW PLAN:", res);
+  
+      // 🔥 أهم سطر
+      window.dispatchEvent(new Event("mealPlanUpdated"));
+  
     } catch (err) {
-      console.log("GENERATE ERROR:", err);
+      console.log(err);
     }
   };
 
@@ -154,7 +187,9 @@ const MealPlanSection = ({ MealPlanTitle, MealPlanDesc }) => {
       </div>
 
 
-
+      <h2>
+       Week: {weekRange.start} → {weekRange.end}
+      </h2>
 
       {/* DAYS */}
       <div className="days">

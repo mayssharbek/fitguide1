@@ -98,7 +98,7 @@ const ProfileSection = ({ descProfile }) => {
            <h1>My Profile</h1>
            <p>{descProfile}</p>
          </div>
-        <button className='btn1Profile' onClick={updateProfile}>Save Changes</button>
+        
         </div>
 </div>
 
@@ -124,10 +124,7 @@ const ProfileSection = ({ descProfile }) => {
               <span>Weight(kg)</span>
             </div>
 
-            <div>
-              <strong>{user?.age}</strong>
-              <span>Age</span>
-            </div>
+           
 
             <div>
               <strong>{bmi}</strong>

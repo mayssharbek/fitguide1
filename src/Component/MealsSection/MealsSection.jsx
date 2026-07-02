@@ -13,6 +13,36 @@ const MealsSection = ({ titleMeal }) => {
     Snack: null,
   });
 
+  const [weekRange, setWeekRange] = useState({ start: "", end: "" });
+
+
+  const getWeekRange = () => {
+    const start = new Date();
+  
+    const end = new Date();
+    end.setDate(start.getDate() + 6);
+  
+    return {
+      start: start.toISOString().split("T")[0],
+      end: end.toISOString().split("T")[0],
+    };
+  };
+
+  useEffect(() => {
+    const range = getWeekRange();
+      setWeekRange(range);
+  }, []);
+
+  
+
+
+
+
+
+
+
+
+
   useEffect(() => {
     const loadMeals = async () => {
       try {
@@ -162,6 +192,9 @@ const MealsSection = ({ titleMeal }) => {
       <h1>{titleMeal}</h1>
 
       <div className="meals-grid">
+      <h2>
+       Week: {weekRange.start} → {weekRange.end}
+      </h2>
         {["Breakfast", "Lunch", "Dinner", "Snack"].map(renderMeal)}
       </div>
     </div>
