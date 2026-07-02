@@ -15,9 +15,11 @@ const url = API_URL + "/api/auth/register"
 const url1= API_URL + "/api/profiles"
 const url2= API_URL + "/api/meals"
 const url3= API_URL+ "/api/meal-plans"
+const url4= API_URL+ "/api/meal-plans/${mealId}"
 console.log(url3)
 console.log(url2)
 console.log(url)
+console.log(url4)
 
 console.log(import.meta.env.VITE_API_URL)
 
@@ -176,7 +178,7 @@ export const getMeals = async () => {
   
 
 /*وجبة واحدة */
-export const getMeal = async (id) => {
+export const getMealById = async (id) => {
   const response = await fetch(`${API_URL}/api/meals/${id}`,
     {
       headers: {

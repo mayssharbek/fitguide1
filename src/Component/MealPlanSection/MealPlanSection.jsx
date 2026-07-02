@@ -7,6 +7,7 @@ import {
   generateMealPlan,
   deleteMealPlan,
   swapMeal,
+  getMealPlan1,
 } from "../../services/api";
 
 const Days = [

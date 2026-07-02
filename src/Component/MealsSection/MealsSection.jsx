@@ -1,220 +1,164 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import "./MealsSection.css";
-import { createMealLogs, getMeals } from "../../services/api";
+import { createMealLogs, getMealPlan } from "../../services/api";
 
 const MealsSection = ({ titleMeal }) => {
-
-  const [meals, setMeals] = useState({
-    Breakfast: [],
-    Lunch: [],
-    Dinner: [],
-    Snack: []
-  });
-
-  const [nuirition, setNutiriton] = useState({
-    calories:0,
-    protein:0,
-    carbs:0,
-    fats:0
-  });
-
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const [meals, setMeals] = useState({
+    Breakfast: null,
+    Lunch: null,
+    Dinner: null,
+    Snack: null,
+  });
 
-    const loadMeals = async()=>{
-      try{
-        const response = await getMeals();
-        if(!response || !response.data){
-          console.log("no meal or unauthorized")
-          return
-        }
-      console.log("response" , response)
-        const groupedMeals = {
-          Breakfast: [],
-          Lunch: [],
-          Dinner: [],
-          Snack: []
+  useEffect(() => {
+    const loadMeals = async () => {
+      try {
+        const plans = await getMealPlan();
+
+        console.log("PLAN:", plans);
+
+        if (!plans || plans.length === 0) return;
+
+        const mealPlan = plans[0];
+
+        const today = new Date()
+          .toLocaleDateString("en-US", { weekday: "long" })
+          .toLowerCase();
+
+        const grouped = {
+          Breakfast: null,
+          Lunch: null,
+          Dinner: null,
+          Snack: null,
         };
-        
-       response.data.forEach((meal) => {
-        
-          if (meal.meal_type === "breakfast") {
-            groupedMeals.Breakfast.push(meal);
+
+        mealPlan.meal_plan_items.forEach((item) => {
+          if (item.day_of_week.toLowerCase() !== today) return;
+
+          const meal = {
+            ...item.meal,
+            mealPlanItemId: item.id,
+            mealTime: item.meal_time,
+          };
+
+          switch (item.meal_time.toLowerCase()) {
+            case "breakfast":
+              grouped.Breakfast = meal;
+              break;
+
+            case "lunch":
+              grouped.Lunch = meal;
+              break;
+
+            case "dinner":
+              grouped.Dinner = meal;
+              break;
+
+            case "snack":
+              grouped.Snack = meal;
+              break;
+
+            default:
+              break;
           }
-        
-          if (meal.meal_type === "lunch") {
-            groupedMeals.Lunch.push(meal);
-          }
-        
-          if (meal.meal_type === "dinner") {
-            groupedMeals.Dinner.push(meal);
-          }
-        
-          if (meal.meal_type === "snack") {
-            groupedMeals.Snack.push(meal);
-          }
-        
         });
-        
-        setMeals(groupedMeals);
-      }
-  
-       catch(error){
-        console.log(error)
+
+        setMeals(grouped);
+      } catch (err) {
+        console.log(err);
       }
     };
-       loadMeals()
-       
-       }
-    
-    
 
-  , []);
+    loadMeals();
+  }, []);
 
   const handleSwap = (meal) => {
-
     navigate("/app/foodlibrary", {
       state: {
-        mealId: meal.id,
-        mealType: meal.meal_type
-      }
+        mealPlanItemId: meal.mealPlanItemId,
+        mealType: meal.mealTime,
+      },
     });
-
   };
 
-
   const handleAddMeal = async (meal) => {
-    console.log("clicked")
     try {
       const today = new Date().toISOString().split("T")[0];
 
-      /*await createMealLogs({
+      const payload = {
         meal_id: meal.id,
         quantity: 1,
         log_date: today,
-        meal_time: meal.meal_type,
-      }
-      );*/
+        meal_time: meal.mealTime,
+      };
 
-    const payload = {
-      meal_id: meal.id,
-      quantity: 1,
-      log_date: today,
-      meal_time: meal.meal_type,
-};
-console.log("payload" , payload)
+      console.log("PAYLOAD:", payload);
 
- const response =await createMealLogs(payload)
- console.log("post" , response)
- console.log("meal added")
-console.log("PAYLOAD SENT:", payload);
-      
+      await createMealLogs(payload);
 
-      /*setNutiriton((prev) => ({
-        calories: prev.calories + Number(meal.calories || 0),
-        protein: prev.protein + Number(meal.protein || 0),
-        carbs: prev.carbs + Number(meal.carbs || 0),
-        fats: prev.fats + Number(meal.fats || 0),
-      }));
+      window.dispatchEvent(new Event("mealsUpdated"));
 
-      console.log("Meal added + macros updated");*/
-     window.dispatchEvent(new Event("mealsUpdated"))
-    } catch (error) {
-      console.log("status" , error.response?.status)
-      console.log("backend", error.response?.data);
+      alert("Meal added successfully");
+    } catch (err) {
+      console.log(err);
     }
   };
 
-
-
-
-
-
-
-
   const renderMeal = (type) => {
-
-    const foods = meals[type] || [];
+    const meal = meals[type];
 
     return (
       <div className="meal-card" key={type}>
-
         <h4>{type}</h4>
 
-        {foods.length > 0 ? (
+        {meal ? (
+          <div className="food-item">
+            <h2 className="itemName">{meal.name}</h2>
 
-          foods.map((item) => (
+            <p>{meal.calories} kcal</p>
 
-            <div
-              key={item.id}
-              className="food-item"
+            <p>Protein: {meal.protein} g</p>
+
+            <p>Carbs: {meal.carbs} g</p>
+
+            <p>Fat: {meal.fats} g</p>
+
+            <button
+              className="swap"
+              onClick={() => handleSwap(meal)}
             >
+              Swap 🔄
+            </button>
 
-              <h2 className="itemName">
-                {item.name}
-              </h2>
-
-              <p>
-                {item.calories} kcal
-              </p>
-
-              <p>
-                Protein: {item.protein} g
-              </p>
-
-              <button
-                className="swap"
-                onClick={() => handleSwap(item)}
-              >
-                Swap 🔄
-              </button>
-
-              <button
-                className="add"
-                onClick={() => handleAddMeal(item)}
-              >
-                Add
-              </button>
-
-            </div>
-
-          ))
-
-        ) : (
-
-          <div className="no-food">
-
-            <h2>No food</h2>
-
-            <p>0 kcal</p>
-
+            <button
+              className="add"
+              onClick={() => handleAddMeal(meal)}
+            >
+              Add
+            </button>
           </div>
-
+        ) : (
+          <div className="no-food">
+            <h2>No food</h2>
+            <p>0 kcal</p>
+          </div>
         )}
-
       </div>
     );
-
   };
 
   return (
-
     <div className="meals-container">
-
       <h1>{titleMeal}</h1>
 
       <div className="meals-grid">
-
         {["Breakfast", "Lunch", "Dinner", "Snack"].map(renderMeal)}
-
       </div>
-
     </div>
-
   );
-
 };
 
 export default MealsSection;
